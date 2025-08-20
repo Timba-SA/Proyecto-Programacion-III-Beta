@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Gestión - Finanzas</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-left">
+                 <a href="home.html"><img src="img/Gemini_Generated_Image_qwh393qwh393qwh3.png" alt="Logo Tienda" class="logo"></a>
+                <a href="home.html">Ver Tienda</a>
+            </div>
+            <div class="nav-right">
+                </div>
+        </nav>
+    </header>
+
+    <main class="container gestion-container">
+        <h1>Panel de Administración</h1>
+
+        <section class="forms-grid">
+            <div class="form-card">
+                <h2>📈 Registrar Nueva Venta</h2>
+                <form id="form-ventas">
+                    <input type="text" id="venta-cliente" placeholder="Nombre del Cliente" required>
+                    <input type="text" id="venta-producto" placeholder="Producto(s) Vendido(s)" required>
+                    <input type="number" id="venta-total" placeholder="Total de la Venta ($)" min="0" step="0.01" required>
+                    <input type="date" id="venta-fecha" required>
+                    <button type="submit" class="btn-gestion btn-venta">Agregar Venta</button>
+                </form>
+            </div>
+
+            <div class="form-card">
+                <h2>💸 Registrar Nuevo Gasto</h2>
+                <form id="form-gastos">
+                    <input type="text" id="gasto-descripcion" placeholder="Descripción del Gasto" required>
+                    <input type="number" id="gasto-monto" placeholder="Monto ($)" min="0" step="0.01" required>
+                    <input type="date" id="gasto-fecha" required>
+                    <button type="submit" class="btn-gestion btn-gasto">Agregar Gasto</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/gestion.js"></script>
+</body>
+</html>

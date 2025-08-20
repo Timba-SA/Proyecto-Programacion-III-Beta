@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras - Tienda de Ropa</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="page-overlay"></div>
+
+    <div class="nav-overlay">
+        <div class="nav-overlay-header">
+            <a href="home.html"><img src="img/Gemini_Generated_Image_qwh393qwh393qwh3.png" alt="Logo Tienda" class="logo"></a>
+            <div class="nav-overlay-close">&times;</div>
+        </div>
+        <div class="nav-overlay-content">
+            <a href="index.html">Todos los Productos</a>
+            <a href="index.html?categoria=buzos">Buzos</a>
+            <a href="index.html?categoria=pantalones">Pantalones</a>
+            <a href="index.html?categoria=remeras">Remeras</a>
+            <a href="index.html?categoria=camisas">Camisas</a>
+            
+            <div class="nav-login-section">
+                <form id="nav-login-form">
+                    <input type="text" id="nav-username" placeholder="Usuario" required>
+                    <input type="password" id="nav-password" placeholder="Contraseña" required>
+                    <button type="submit">Ingresar</button>
+                    <p id="nav-login-error"></p>
+                </form>
+                <div id="admin-link-container" style="display: none;">
+                    <a href="gestion.html" class="btn-gestion-menu">Panel de Gestión</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav>
+            <div class="nav-left">
+                <div class="hamburger-menu">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </div>
+            <div class="nav-middle">
+                <a href="home.html"><img src="img/Gemini_Generated_Image_qwh393qwh393qwh3.png" alt="Logo Tienda" class="logo"></a>
+            </div>
+            <div class="nav-right">
+                <a href="carrito.html" class="cart-button">
+                    Carrito <span id="cart-count">0</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container" style="max-width: 900px; margin: 40px auto; padding: 20px;">
+        <h1 style="margin-bottom: 20px;">Resumen de tu Compra</h1>
+        <div id="carrito-detallado-container"></div>
+        <div style="text-align: right; margin-top: 30px;">
+            <h2 id="total-compra">Total: $0.00</h2>
+            <button class="btn" style="background-color: #28a745; color: white; border-color: #28a745;">Finalizar Compra</button>
+        </div>
+    </main>
+    
+    <div id="chatbot-bubble">🤖</div>
+    <div id="chatbot-widget">
+        <div id="chatbot-header">
+            <h3>Asistente Virtual</h3>
+            <span id="chatbot-close">&times;</span>
+        </div>
+        <div id="chatbot-messages"></div>
+        <form id="chatbot-form">
+            <input type="text" id="chatbot-input" placeholder="Escribí tu consulta..." autocomplete="off">
+            <button type="submit">→</button>
+        </form>
+    </div>
+
+    <script src="js/cart.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/chatbot.js"></script>
+</body>
+</html>

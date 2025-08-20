@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de Ropa - Home</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="page-overlay"></div>
+
+    <div class="nav-overlay">
+        <div class="nav-overlay-header">
+            <a href="home.html"><img src="img/Gemini_Generated_Image_qwh393qwh393qwh3.png" alt="Logo Tienda" class="logo"></a>
+            <div class="nav-overlay-close">&times;</div>
+        </div>
+        <div class="nav-overlay-content">
+            <a href="index.html">Todos los Productos</a>
+            <a href="index.html?categoria=buzos">Buzos</a>
+            <a href="index.html?categoria=pantalones">Pantalones</a>
+            <a href="index.html?categoria=remeras">Remeras</a>
+            <a href="index.html?categoria=camisas">Camisas</a>
+            
+            <div class="nav-login-section">
+                <form id="nav-login-form">
+                    <input type="text" id="nav-username" placeholder="Usuario" required>
+                    <input type="password" id="nav-password" placeholder="Contraseña" required>
+                    <button type="submit">Ingresar</button>
+                    <p id="nav-login-error"></p>
+                </form>
+                <div id="admin-link-container" style="display: none;">
+                    <a href="gestion.html" class="btn-gestion-menu">Panel de Gestión</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav>
+            <div class="nav-left">
+                <div class="hamburger-menu">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </div>
+            <div class="nav-middle">
+                <a href="home.html"><img src="img/Gemini_Generated_Image_qwh393qwh393qwh3.png" alt="Logo Tienda" class="logo"></a>
+            </div>
+            <div class="nav-right">
+                <a href="carrito.html" class="cart-button">
+                    Carrito <span id="cart-count">0</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-text">
+                <h1>La Colección de Invierno ya está aquí</h1>
+                <p>Descubre los nuevos buzos, pantalones y remeras diseñados para tu estilo.</p>
+                <a href="index.html" class="btn">VER TODOS LOS PRODUCTOS</a>
+            </div>
+            <div class="hero-images"></div>
+        </section>
+    </main>
+
+    <footer>
+      <small>© 2025 Tienda de Ropa. Todos los derechos reservados.</small>
+    </footer>
+
+    <div id="chatbot-bubble">🤖</div>
+    <div id="chatbot-widget">
+        <div id="chatbot-header">
+            <h3>Asistente Virtual</h3>
+            <span id="chatbot-close">&times;</span>
+        </div>
+        <div id="chatbot-messages"></div>
+        <form id="chatbot-form">
+            <input type="text" id="chatbot-input" placeholder="Escribí tu consulta..." autocomplete="off">
+            <button type="submit">→</button>
+        </form>
+    </div>
+
+    <script src="js/cart.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/chatbot.js"></script>
+</body>
+</html>
