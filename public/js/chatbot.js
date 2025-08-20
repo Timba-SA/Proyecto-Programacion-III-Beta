@@ -6,15 +6,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatInput = document.getElementById('chatbot-input');
     const messagesContainer = document.getElementById('chatbot-messages');
 
-    if (!bubble || !widget) return;
-
     let chatHistory = [];
+
+    if (!bubble || !widget || !chatForm || !chatInput || !messagesContainer) return;
 
     const toggleWidget = () => widget.classList.toggle('show');
     bubble.addEventListener('click', toggleWidget);
-    closeBtn.addEventListener('click', toggleWidget);
+    closeBtn?.addEventListener('click', toggleWidget);
 
     const addMessage = (text, sender) => {
+        if (!messagesContainer) return;
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${sender}`;
         messageDiv.textContent = text;
@@ -22,8 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
         chatHistory.push({ sender: sender, text: text });
     };
-    
-    addMessage("¡Hola! Soy Jarvis, tu asistente virtual. ¿En qué puedo ayudarte?", 'bot');
+
+    addMessage("¡Hola! Soy Jarvis, tu asistente virtual. ¿En qué puedo ayudarte hoy?", 'bot');
 
     chatForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -33,29 +34,38 @@ document.addEventListener('DOMContentLoaded', () => {
         addMessage(userInput, 'user');
         chatInput.value = '';
 
-        const thinkingMessage = document.createElement('div');
-        thinkingMessage.className = 'message bot';
-        thinkingMessage.textContent = 'Jarvis está pensando...';
-        messagesContainer.appendChild(thinkingMessage);
+        const thinkingMessageDiv = document.createElement('div');
+        thinkingMessageDiv.className = 'message bot';
+        thinkingMessageDiv.textContent = 'Jarvis está pensando...';
+        messagesContainer.appendChild(thinkingMessageDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
         try {
             const response = await fetch('/api/chatbot', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: userInput, history: chatHistory }),
+                body: JSON.stringify({
+                    message: userInput,
+                    history: chatHistory
+                }),
             });
-            if (!response.ok) throw new Error('Error del servidor');
-            
-            const data = await response.json();
-            const botReply = data.reply || "No pude procesar esa respuesta.";
-            
-            thinkingMessage.textContent = botReply;
-            chatHistory.push({ sender: 'bot', text: botReply });
 
+            if (!response.ok) {
+                const err = await response.json().catch(()=>({error: 'Error del servidor'}));
+                thinkingMessageDiv.textContent = err.error || 'Error del servidor';
+                chatHistory.push({ sender: 'bot', text: thinkingMessageDiv.textContent });
+                return;
+            }
+
+            const data = await response.json();
+            const botReply = data.reply || data.error || "No pude procesar esa respuesta.";
+            thinkingMessageDiv.textContent = botReply;
+            chatHistory.push({ sender: 'bot', text: botReply });
         } catch (error) {
             console.error('Error en el chatbot:', error);
-            thinkingMessage.textContent = "Uups, algo salió mal. Revisa que el servidor de Python esté corriendo.";
+            const errorMessage = "Uups, algo salió mal. Revisa que el servidor esté corriendo.";
+            thinkingMessageDiv.textContent = errorMessage;
+            chatHistory.push({ sender: 'bot', text: errorMessage });
         }
     });
 });

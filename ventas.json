@@ -1,0 +1,10 @@
+[
+  {
+    "cliente": "Pedro",
+    "producto": "Remera",
+    "cantidad": 2,
+    "metodoPago": "efectivo",
+    "total": 10000,
+    "fecha": "2025-08-20"
+  }
+]

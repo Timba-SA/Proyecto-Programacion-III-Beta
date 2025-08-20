@@ -2,11 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('login-form');
     const errorMessage = document.getElementById('error-message');
 
+    if (!loginForm) return;
+
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
+        const username = document.getElementById('username')?.value || 'admin';
+        const password = document.getElementById('password')?.value || '1234';
 
         try {
             const response = await fetch('/api/login', {
@@ -21,13 +23,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 sessionStorage.setItem('isAdminLoggedIn', 'true');
                 window.location.href = 'gestion.html';
             } else {
-                errorMessage.textContent = data.message || 'Error desconocido';
-                errorMessage.style.display = 'block';
+                if (errorMessage) {
+                    errorMessage.textContent = data.message || 'Error desconocido';
+                    errorMessage.style.display = 'block';
+                } else {
+                    alert(data.message || 'Error desconocido');
+                }
             }
         } catch (error) {
             console.error('Error de conexión:', error);
-            errorMessage.textContent = 'No se pudo conectar con el servidor.';
-            errorMessage.style.display = 'block';
+            if (errorMessage) {
+                errorMessage.textContent = 'No se pudo conectar con el servidor.';
+                errorMessage.style.display = 'block';
+            } else {
+                alert('No se pudo conectar con el servidor.');
+            }
         }
     });
 });

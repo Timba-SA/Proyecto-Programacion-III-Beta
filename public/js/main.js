@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // ACÁ ESTÁN LOS PRODUCTOS, COMO PEDISTE
+    // LISTA DE PRODUCTOS (asegurate que los nombres de archivos coincidan con /public/img)
     const productos = [
         { "id": 1, "nombre": "Buzo Lafayette Negro", "categoria": "buzos", "precio": 55.00, "imagen": "img/Buzo negro.jpeg" },
         { "id": 2, "nombre": "Buzo Givenchy Negro", "categoria": "buzos", "precio": 95.00, "imagen": "img/Buzo Givenchy.jpeg" },
         { "id": 3, "nombre": "Buzo Fresh Eyes Celeste", "categoria": "buzos", "precio": 48.50, "imagen": "img/Buzo Blanco.jpeg" },
-        { "id": 4, "nombre": "Buzo Graffiti Beige", "categoria": "buzos", "precio": 52.00, "imagen": "img/Boys Sweatshirts _ ZARA United States.jpeg" },
+        { "id": 4, "nombre": "Buzo Graffiti Beige", "categoria": "buzos", "precio": 52.00, "imagen": "img/Boys' Sweatshirts _ ZARA United States.jpeg" },
         { "id": 5, "nombre": "Buzo Cuello Redondo Marrón", "categoria": "buzos", "precio": 42.99, "imagen": "img/download.jpeg" },
         { "id": 15, "nombre": "Buzo Liso Beige", "categoria": "buzos", "precio": 45.00, "imagen": "img/TAPERED PLUSH PANTS.jpeg" },
         { "id": 16, "nombre": "Buzo Explorer Verde", "categoria": "buzos", "precio": 50.00, "imagen": "img/SUDADERA ESTAMPADO RELIEVE.jpeg" },
@@ -60,7 +60,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const id = parseInt(e.target.dataset.id);
             const productoSeleccionado = productos.find(p => p.id === id);
             if (productoSeleccionado) {
-                agregarAlCarrito(productoSeleccionado);
+                // función global definida en cart.js
+                if (typeof window.agregarAlCarrito === 'function') {
+                    window.agregarAlCarrito(productoSeleccionado);
+                } else {
+                    // fallback: llamar si está en scope global sin window
+                    if (typeof agregarAlCarrito === 'function') agregarAlCarrito(productoSeleccionado);
+                }
             }
         }
     });

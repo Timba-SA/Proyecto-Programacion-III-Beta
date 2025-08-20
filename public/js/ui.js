@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- FUNCIÓN PARA ACTUALIZAR LA VISTA DEL LOGIN ---
     // Se fija si el admin ya inició sesión y muestra/oculta lo que corresponde.
     function actualizarVistaLogin() {
+        if (!navLoginForm || !adminLinkContainer) return;
         if (sessionStorage.getItem('isAdminLoggedIn') === 'true') {
             navLoginForm.style.display = 'none';
             adminLinkContainer.style.display = 'block';
@@ -41,36 +42,40 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- LÓGICA DEL LOGIN DENTRO DEL MENÚ (LO NUEVO) ---
-    navLoginForm.addEventListener('submit', async (e) => {
-        e.preventDefault(); // Evita que la página se recargue
-        navLoginError.textContent = ''; // Limpia errores anteriores
+    // Evitar errores si el formulario no está en la página
+    if (navLoginForm) {
+        navLoginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!navLoginError) return;
+            navLoginError.textContent = '';
 
-        const username = document.getElementById('nav-username').value;
-        const password = document.getElementById('nav-password').value;
+            const username = document.getElementById('nav-username')?.value || '';
+            const password = document.getElementById('nav-password')?.value || '';
 
-        // Le mandamos los datos al backend para ver si son correctos
-        try {
-            const response = await fetch('/api/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password }),
-            });
+            // Le mandamos los datos al backend para ver si son correctos
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password }),
+                });
 
-            const data = await response.json();
+                const data = await response.json();
 
-            if (data.success) {
-                // Si el login es correcto...
-                sessionStorage.setItem('isAdminLoggedIn', 'true');
-                actualizarVistaLogin(); // Actualizamos el menú para mostrar el botón
-            } else {
-                // Si el login falla...
-                navLoginError.textContent = 'Usuario o contraseña incorrectos.';
+                if (data.success) {
+                    // Si el login es correcto...
+                    sessionStorage.setItem('isAdminLoggedIn', 'true');
+                    actualizarVistaLogin(); // Actualizamos el menú para mostrar el botón
+                } else {
+                    // Si el login falla...
+                    navLoginError.textContent = data.message || 'Usuario o contraseña incorrectos.';
+                }
+            } catch (error) {
+                console.error('Error de conexión:', error);
+                navLoginError.textContent = 'Error de conexión con el servidor.';
             }
-        } catch (error) {
-            console.error('Error de conexión:', error);
-            navLoginError.textContent = 'Error de conexión con el servidor.';
-        }
-    });
+        });
+    }
 
     // --- INICIALIZACIÓN ---
     // Apenas carga la página, revisamos si el admin ya estaba logueado
